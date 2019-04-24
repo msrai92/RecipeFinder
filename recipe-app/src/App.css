@@ -35,3 +35,14 @@
   background-color: blue;
   padding-right: 5%;
 }
+
+.recipe{
+  display: flex;
+  flex-direction: row;
+  background-color: green;
+}
+
+.img-title{
+  display:flex;
+  flex-direction: column;
+}

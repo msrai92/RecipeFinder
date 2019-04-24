@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Search from './components/Search';
 import Switch from '@material-ui/core/Switch';
+import Recipe from './components/Recipe';
 import './App.css';
 require('dotenv').config()
 class App extends Component {
@@ -11,7 +12,8 @@ class App extends Component {
   state = {
     target: undefined,
     color: "white",
-    textColor: "black"
+    textColor: "black",
+    recipes: undefined
   }
 
   searchRecipe = async e => {
@@ -26,13 +28,15 @@ class App extends Component {
         `https://cors-anywhere.herokuapp.com/https://api.edamam.com/search?q=${targetIngredient}&app_id=${appID}&app_key=${appKey}`
         );
       const recipeData = await recipeCall.json();
-      console.log(recipeData);
+      console.log(recipeData.hits);
+      this.setState({
+        target: targetIngredient,
+        recipes: recipeData.hits
+      });
     }catch (err) {
       console.log(err);
     }
-    this.setState({
-      target: targetIngredient
-    });
+    
   }
 
   handleTheme(){
@@ -52,6 +56,28 @@ class App extends Component {
     
   }
 
+  renderRecipeList(){
+    const list = [];
+    if(this.state.recipes!==undefined){
+    const recipes = this.state.recipes;
+    for(var i=0; i<recipes.length; i++){
+      const recipe = <Recipe 
+      key={recipes[i].recipe.label}
+      recipeName={recipes[i].recipe.label} 
+      url={recipes[i].recipe.image}
+      calories={recipes[i].recipe.calories.toFixed(2)}
+      cautions={recipes[i].recipe.caution}
+      healthFacts={recipes[i].recipe.healthLabels}
+      ingredients={recipes[i].recipe.ingredients}
+      />
+      list.push(recipe);
+    }
+
+    }
+    
+    return list;
+  }
+
   render() {
     return (
       <div className="App" >
@@ -66,8 +92,8 @@ class App extends Component {
           </div>
          
           <Search searchRecipe={this.searchRecipe}/>
-          <p>{this.state.target}</p>
-         
+      
+          {this.renderRecipeList()}
         </div>
       
 
