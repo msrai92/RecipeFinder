@@ -64,13 +64,15 @@ class App extends Component {
       const recipe = <Recipe 
       key={recipes[i].recipe.label}
       recipeName={recipes[i].recipe.label} 
-      url={recipes[i].recipe.image}
+      image={recipes[i].recipe.image}
       calories={recipes[i].recipe.calories.toFixed(2)}
       cautions={recipes[i].recipe.caution}
       healthFacts={recipes[i].recipe.healthLabels}
       ingredients={recipes[i].recipe.ingredients}
+      url={recipes[i].recipe.url}
       />
       list.push(recipe);
+      console.log(recipes[i].recipe.url)
     }
 
     }

@@ -18,14 +18,22 @@ class Recipe extends Component {
         return ( 
         <div className="recipe">
             <div className="img-title">
-                <h2>{this.props.recipeName}</h2>
-                <img src={this.props.url}></img>
+                <a href={this.props.url}><h2>{this.props.recipeName}</h2></a>
+                <img src={this.props.image}></img>
+            </div>
+            <div className="ingredients">
+                <h2>Ingredients</h2>
+                {this.props.ingredients &&  
+                    this.renderIngredientList(this.props.ingredients)}
+            </div>
+            <div className="health">
+                <h2>Health</h2>
+                {this.props.healthFacts && this.renderHealthFacts(this.props.healthFacts)}
+                <p>{this.props.calories}</p>
+                <p>{this.props.cautions}</p>
             </div>
             
-            <p>{this.props.calories}</p>
-            <p>{this.props.cautions}</p>
-            {this.props.healthFacts && this.renderHealthFacts(this.props.healthFacts)}
-            {this.props.ingredients &&  this.renderIngredientList(this.props.ingredients)}
+            
             
         </div> );
     }
